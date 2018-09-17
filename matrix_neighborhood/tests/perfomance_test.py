@@ -35,7 +35,7 @@ TESTED_SOLUTIONS = [reference_solution]
 
 
 if __name__ == '__main__':
-    solution_times = defaultdict(int)
+    solution_times = defaultdict(float)
 
     for solution in TESTED_SOLUTIONS:
         solution_time = iterate_b_set(a, d, solution)

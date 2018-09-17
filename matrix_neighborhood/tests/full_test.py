@@ -36,7 +36,7 @@ TESTED_SOLUTIONS = [reference_solution]
 
 
 if __name__ == '__main__':
-    solution_times = defaultdict(int)
+    solution_times = defaultdict(float)
     fallen_solutions = []
 
     a_set = get_a_for_test(N_MAX, N_STEP, K_MAX, K_STEP)
