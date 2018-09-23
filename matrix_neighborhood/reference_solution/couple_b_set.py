@@ -3,6 +3,7 @@ from itertools import combinations
 from itertools import product
 
 from typing import Iterator
+from typing import Tuple
 
 import numpy as np
 
@@ -15,7 +16,7 @@ __all__ = ['get_couple_b_set']
 
 def _get_b_set_by_u(a: np.ndarray,
                     nonzero_rows: np.ndarray,
-                    nonzero_cols: np.ndarray):
+                    nonzero_cols: np.ndarray) -> Iterator[np.ndarray]:
 
     n, k = a.shape
     for u_row, u_original_col in zip(nonzero_rows, nonzero_cols):
@@ -29,7 +30,7 @@ def _get_b_set_by_u(a: np.ndarray,
             yield b
 
 
-def _get_b_set_by_v(a: np.ndarray, nonzero_rows: np.ndarray):
+def _get_b_set_by_v(a: np.ndarray, nonzero_rows: np.ndarray) -> Iterator[np.ndarray]:
     v_row_combinations = combinations(nonzero_rows, 2)
     for v_rows in v_row_combinations:
         v_rows = list(v_rows)
@@ -43,7 +44,7 @@ def _get_b_set_by_v(a: np.ndarray, nonzero_rows: np.ndarray):
 def _get_b_set_by_v_w(a: np.ndarray,
                       nonzero_rows: np.ndarray,
                       nonzero_cols: np.ndarray,
-                      zero_rows: np.ndarray):
+                      zero_rows: np.ndarray) -> Iterator[np.ndarray]:
     n, k = a.shape
     for v_row, v_col in zip(nonzero_rows, nonzero_cols):
 
@@ -56,14 +57,14 @@ def _get_b_set_by_v_w(a: np.ndarray,
             yield b
 
 
-def _get_w_col_combinations(k: int):
+def _get_w_col_combinations(k: int) -> Iterator[Tuple[int, ...]]:
     w_value_combinations = [range(k)] * 2
     w_value_combinations = product(*w_value_combinations)
 
     return w_value_combinations
 
 
-def _get_b_set_by_w(a: np.ndarray, zero_rows: np.ndarray):
+def _get_b_set_by_w(a: np.ndarray, zero_rows: np.ndarray) -> Iterator[np.ndarray]:
     n, k = a.shape
     w_row_combinations = combinations(zero_rows, 2)
     w_col_combinations = _get_w_col_combinations(k)
