@@ -4,8 +4,8 @@ import numpy as np
 
 from matrix_neighborhood.a_set import get_a_set
 
-from matrix_neighborhood.utils import is_binary
-from matrix_neighborhood.utils import is_in_a_set
+from matrix_neighborhood.utils import check_a
+from matrix_neighborhood.utils import check_d
 from matrix_neighborhood.utils import hamming_distance
 from matrix_neighborhood.utils import get_max_hamming_distance
 
@@ -22,24 +22,8 @@ def _get_b_set(a: np.ndarray, d: int) -> Iterator[np.ndarray]:
 
 
 def get_b_set(a: np.ndarray, d: int) -> Iterator[np.ndarray]:
-    if type(d) is not int:
-        raise ValueError('Distance must be integer')
-
-    if d < 0:
-        raise ValueError('Distance must be >= 0')
-
-    if len(a.shape) != 2:
-        raise ValueError('a is not matrix')
-
-    n, k = a.shape
-    if k < 2 or n < 2:
-        raise ValueError('a is vector')
-
-    if not is_binary(a):
-        raise ValueError('a is not binary')
-
-    if not is_in_a_set(a):
-        raise ValueError('a not in A')
+    check_d(d)
+    check_a(a)
 
     if d == 0:
         return iter((a.copy(),))
