@@ -1,8 +1,9 @@
-from typing import Iterable
 from typing import Iterator
 from typing import Tuple
 
 import numpy as np
+
+from matrix_neighborhood.a_set import build_a
 
 
 __all__ = ['encode_a',
@@ -27,13 +28,7 @@ def encode_a(a: np.ndarray) -> np.ndarray:
     return encoded_a
 
 
-def decode_b(b: Iterable[int], n: int, k: int):
-    matrix = np.zeros((n, k), dtype=bool)
-    for row, col in enumerate(b):
-        if col > 0:
-            matrix[row, col-1] = 1
-
-    return matrix
+decode_b = build_a
 
 
 def get_max_hamming_distance(a: np.ndarray) -> int:
@@ -55,4 +50,3 @@ def get_nonzero_zero_indexes_1d(a: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     zero_indexes = np.nonzero(a == 0)[0]
 
     return nonzero_indexes, zero_indexes
-
